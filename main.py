@@ -5,7 +5,7 @@ from functions import *
 
 intents = discord.Intents(messages=True, guilds=True, reactions=True, members=True, presences=True)
 
-Bot = commands.Bot('!hcm ')
+Bot = commands.Bot(command_prefix='!hcm ', intents=intents)
 
 game = Game()
 
@@ -33,6 +33,21 @@ async def prensesTiana(ctx, *args):
         await ctx.send(game.roll_dice())
     else:
         await ctx.send('Hcm 31 esports sunar')
+
+@Bot.command()
+@commands.has_role("Prenses")
+async def clear(ctx, amount=10):
+    await ctx.channel.purge(limit=amount)
+
+@Bot.command()
+@commands.has_role("Prenses")
+async def clone(ctx):
+    await ctx.channel.clone()
+
+@Bot.command()
+@commands.has_role("Prenses")
+async def ban(ctx,member= discord.Member, *args, reason="Bilmiyorum"):
+    await member.ban(reason=reason)
 
 
 Bot.run(TOKEN)
